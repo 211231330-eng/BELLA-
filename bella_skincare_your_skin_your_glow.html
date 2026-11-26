@@ -1,0 +1,1496 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BELLAÉ SKINCARE — Your Skin, Your Glow</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            blush: {
+              50: '#FFFDFC',
+              100: '#FAF3F1',
+              200: '#F3E3DF',
+              300: '#E7C8C2',
+              400: '#D69E98',
+              500: '#C4666E',
+              600: '#A84E56',
+              700: '#8B3D44',
+            },
+            cocoa: {
+              DEFAULT: '#3D2C2E',
+              muted: '#7A6264',
+              light: '#9E8587'
+            }
+          },
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+          },
+          boxShadow: {
+            'soft': '0 20px 50px -15px rgba(168, 78, 86, 0.12)',
+            'glass': '0 8px 32px 0 rgba(196, 102, 110, 0.10)',
+            'petal': '0 15px 35px -10px rgba(61, 44, 46, 0.08)',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #FAF3F1;
+      color: #3D2C2E;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Custom Glassmorphism & Rose Gold Gradients */
+    .glass-nav {
+      background: rgba(255, 253, 252, 0.78);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(196, 102, 110, 0.12);
+    }
+
+    .glass-card {
+      background: rgba(255, 253, 252, 0.72);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.85);
+    }
+
+    .rose-gold-gradient {
+      background: linear-gradient(135deg, #E8B8AF 0%, #C4666E 50%, #A84E56 100%);
+    }
+
+    .rose-gold-metallic {
+      background: linear-gradient(135deg, #F4D5CE 0%, #D99B92 35%, #B86B6B 70%, #EBC3BA 100%);
+    }
+
+    .hero-ambient {
+      background:
+        radial-gradient(circle at 20% 25%, rgba(243, 227, 223, 0.95) 0%, transparent 50%),
+        radial-gradient(circle at 82% 20%, rgba(231, 200, 194, 0.65) 0%, transparent 45%),
+        radial-gradient(circle at 55% 80%, rgba(196, 102, 110, 0.14) 0%, transparent 55%),
+        #FAF3F1;
+    }
+
+    /* Subtle Floating Animations */
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-10px) rotate(1.2deg); }
+    }
+    @keyframes floatReverse {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(8px) rotate(-1.5deg); }
+    }
+    @keyframes shimmerDrop {
+      0%, 100% { transform: scale(1) translateY(0); opacity: 0.92; }
+      50% { transform: scale(1.06) translateY(-6px); opacity: 1; }
+    }
+
+    .animate-float-slow {
+      animation: floatSlow 6s ease-in-out infinite;
+    }
+    .animate-float-reverse {
+      animation: floatReverse 7s ease-in-out infinite;
+    }
+    .animate-droplet {
+      animation: shimmerDrop 4.5s ease-in-out infinite;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #FAF3F1;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #D69E98;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #C4666E;
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-blush-500 selection:text-white">
+
+  <!-- Toast Notification (Replaces alert()) -->
+  <div id="toast-container" class="fixed bottom-6 right-6 z-[100] flex flex-col gap-3 pointer-events-none"></div>
+
+  <!-- 1. STICKY GLASSMORPHISM NAVBAR -->
+  <header class="sticky top-0 z-50 glass-nav transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        <!-- Brand Logo SVG (Custom Wordmark + Leaf Accent on É) -->
+        <a href="#home" class="flex items-center gap-3 group focus:outline-none" aria-label="BELLAÉ SKINCARE Home">
+          <!-- Mobile/Compact Monogram Badge -->
+          <div class="w-10 h-10 rounded-xl bg-blush-500 flex items-center justify-center shadow-sm group-hover:bg-blush-600 transition-colors sm:hidden">
+            <svg viewBox="0 0 48 48" class="w-7 h-7" fill="none">
+              <path d="M13 11H22.5C26.5 11 29 13.2 29 16.5C29 19 27.3 20.8 24.8 21.4C28.1 22 30.2 24.2 30.2 27.4C30.2 31.6 26.8 35 21.2 35H13V11ZM16.5 20.2H21.6C24 20.2 25.5 18.9 25.5 17C25.5 15 24 13.8 21.6 13.8H16.5V20.2ZM16.5 32.1H21.5C24.7 32.1 26.6 30.4 26.6 27.6C26.6 24.9 24.6 23 21.3 23H16.5V32.1Z" fill="#FFFDFC"/>
+              <path d="M31.5 17.5C32.2 13.3 36.4 10.6 40.5 10.8C40.2 14.9 37.3 18.2 33 18.4C32.2 18.4 31.7 18.1 31.5 17.5Z" fill="#FFFDFC"/>
+            </svg>
+          </div>
+          <!-- Full Wordmark Logo -->
+          <div class="flex flex-col items-center">
+            <svg viewBox="0 0 230 56" class="h-11 sm:h-12 w-auto" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- BELLAÉ Clean Geometric-Humanist Serif/Sans Hybrid -->
+              <text x="8" y="34" fill="#C4666E" font-family="'Plus Jakarta Sans', sans-serif" font-weight="500" font-size="31" letter-spacing="4.5">BELLAE</text>
+              <!-- Signature Leaf Accent over the final E -->
+              <path d="M196 11.5C195.2 9.8 193.5 9.2 193.5 9.2C193.5 9.2 194.2 11.5 196.2 12.1C199.8 12.8 205.5 9.5 207.8 3.2C201.4 3.5 197.2 7.2 196 11.5Z" fill="#C4666E"/>
+              <path d="M195.8 11.8C199.5 9.6 203.2 7.1 206.8 3.8" stroke="#FAF3F1" stroke-width="0.9" stroke-linecap="round"/>
+              <!-- Spaced SKINCARE Subtitle -->
+              <text x="43" y="50" fill="#C4666E" font-family="'Plus Jakarta Sans', sans-serif" font-weight="400" font-size="10.2" letter-spacing="6.8">SKINCARE</text>
+            </svg>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-cocoa">
+          <a href="#home" class="hover:text-blush-500 transition-colors">Home</a>
+          <a href="#glow-serum" class="hover:text-blush-500 transition-colors">Glow Serum</a>
+          <a href="#collection" class="hover:text-blush-500 transition-colors">Collection</a>
+          <a href="#skin-quiz" class="hover:text-blush-500 transition-colors flex items-center gap-1.5">
+            <span>Skin Quiz</span>
+            <span class="px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider rounded-full bg-blush-200 text-blush-600">New</span>
+          </a>
+          <a href="#brand-story" class="hover:text-blush-500 transition-colors">Brand Story</a>
+        </nav>
+
+        <!-- Actions: Cart Trigger & Shop Now CTA -->
+        <div class="flex items-center gap-3 sm:gap-4">
+          <button onclick="toggleCart(true)" class="relative p-2.5 rounded-full bg-blush-50 border border-blush-200 text-cocoa hover:border-blush-500 hover:text-blush-600 transition-all shadow-sm" aria-label="Buka Keranjang Belanja">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+            </svg>
+            <span id="cart-badge" class="absolute -top-1.5 -right-1.5 min-w-[20px] h-5 px-1 rounded-full bg-blush-500 text-white text-[11px] font-bold flex items-center justify-center shadow">0</span>
+          </button>
+
+          <a href="#collection" class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-blush-500 hover:bg-blush-600 text-white text-sm font-medium shadow-md hover:shadow-lg transition-all">
+            <span>Shop Now</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </a>
+
+          <!-- Mobile Hamburger -->
+          <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="md:hidden p-2.5 rounded-xl bg-blush-50 border border-blush-200 text-cocoa" aria-label="Toggle Menu">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Dropdown Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-blush-50 border-t border-blush-200 px-6 py-5 space-y-3 shadow-lg">
+      <a href="#home" onclick="toggleMobileMenu()" class="block py-2 text-base font-medium text-cocoa hover:text-blush-500">Home</a>
+      <a href="#glow-serum" onclick="toggleMobileMenu()" class="block py-2 text-base font-medium text-cocoa hover:text-blush-500">Glow Boost Serum</a>
+      <a href="#collection" onclick="toggleMobileMenu()" class="block py-2 text-base font-medium text-cocoa hover:text-blush-500">Skincare Collection</a>
+      <a href="#skin-quiz" onclick="toggleMobileMenu()" class="block py-2 text-base font-medium text-blush-600">Find Your Glow Quiz ✨</a>
+      <a href="#brand-story" onclick="toggleMobileMenu()" class="block py-2 text-base font-medium text-cocoa hover:text-blush-500">Brand Story</a>
+    </div>
+  </header>
+
+  <!-- 2. HERO SECTION (Editorial Split Inspired by Visual Key Art) -->
+  <section id="home" class="relative hero-ambient pt-10 pb-20 lg:pt-16 lg:pb-28 overflow-hidden">
+    <!-- Decorative Soft Light Beams & Floating Petals SVG -->
+    <div class="pointer-events-none absolute inset-0 overflow-hidden">
+      <div class="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-blush-300/30 blur-3xl"></div>
+      <div class="absolute top-1/3 right-0 w-80 h-80 rounded-full bg-blush-400/20 blur-3xl"></div>
+      <!-- Top Right Rose Petal -->
+      <svg class="hidden sm:block absolute top-10 right-12 w-24 h-24 opacity-80 animate-float-slow" viewBox="0 0 120 120" fill="none">
+        <defs>
+          <linearGradient id="petalGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#F6D5CE"/>
+            <stop offset="55%" stop-color="#E39D95"/>
+            <stop offset="100%" stop-color="#C4666E"/>
+          </linearGradient>
+        </defs>
+        <path d="M98 18C74 20 42 42 26 78C21 90 24 98 34 95C66 86 94 56 102 25C103 20 101 18 98 18Z" fill="url(#petalGrad1)"/>
+        <path d="M32 91C54 72 76 50 96 23" stroke="#FFFDFC" stroke-opacity="0.45" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+        
+        <!-- Left Column: Brand Copy & Editorial Messaging -->
+        <div class="lg:col-span-6 text-center lg:text-left space-y-6">
+          <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-blush-50/90 border border-blush-200 shadow-sm">
+            <span class="w-2 h-2 rounded-full bg-blush-500 animate-pulse"></span>
+            <span class="text-xs font-semibold tracking-widest uppercase text-blush-600">Modern • Confident • Fresh</span>
+          </div>
+
+          <h1 class="font-serif text-5xl sm:text-6xl lg:text-[68px] font-semibold leading-[1.06] text-cocoa tracking-tight">
+            Your Skin, <br />
+            <span class="italic font-normal text-blush-500">Your Glow.</span>
+          </h1>
+
+          <p class="text-base sm:text-lg text-cocoa-muted max-w-xl mx-auto lg:mx-0 leading-relaxed">
+            <strong class="text-cocoa font-semibold">Healthy Skin for a Brighter Tomorrow.</strong> Dirancang khusus untuk generasi muda yang merayakan keunikan kulitnya sendiri—formula ringan, menghidrasi mendalam, dan memberikan kilau alami tanpa rasa berat.
+          </p>
+
+          <!-- Primary & Secondary CTAs -->
+          <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+            <button onclick="addToCart('glow-boost-serum')" class="w-full sm:w-auto px-8 py-4 rounded-full bg-blush-500 hover:bg-blush-600 text-white font-semibold text-base shadow-soft hover:shadow-xl transform hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2.5">
+              <span>Get Yours Now!</span>
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </button>
+
+            <a href="#skin-quiz" class="w-full sm:w-auto px-7 py-4 rounded-full bg-blush-50 hover:bg-white text-cocoa border border-blush-300 font-medium text-base transition-all flex items-center justify-center gap-2 shadow-sm">
+              <span>Cek Kebutuhan Kulitmu</span>
+              <span class="text-blush-500">✦</span>
+            </a>
+          </div>
+
+          <!-- Social & Official Store Micro-Bar (From Visual Poster Footer) -->
+          <div class="pt-4 flex flex-wrap items-center justify-center lg:justify-start gap-6 text-xs sm:text-sm text-cocoa-muted border-t border-blush-200/80">
+            <a href="#brand-story" class="inline-flex items-center gap-2 hover:text-blush-600 transition-colors">
+              <svg class="w-4 h-4 text-blush-500" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"></path>
+                <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line>
+              </svg>
+              <span>@bellae.skincare</span>
+            </a>
+            <span class="text-blush-300">|</span>
+            <a href="#collection" class="inline-flex items-center gap-2 hover:text-blush-600 transition-colors">
+              <svg class="w-4 h-4 text-blush-500" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+              </svg>
+              <span>Bellaé Official Store</span>
+            </a>
+            <span class="text-blush-300 hidden sm:inline">|</span>
+            <span class="inline-flex items-center gap-1.5 text-cocoa font-medium">
+              <span class="text-amber-500">★★★★★</span> 4.9/5 (2.4k+ Reviews)
+            </span>
+          </div>
+        </div>
+
+        <!-- Right Column: Editorial Key-Art Composition (Frosted Bottle, Box, Crystal Pedestal & Floating Pills) -->
+        <div class="lg:col-span-6 relative flex items-center justify-center min-h-[460px] sm:min-h-[540px]">
+          
+          <!-- Translucent Arch Halo Behind Product -->
+          <div class="absolute w-72 h-96 sm:w-80 sm:h-[430px] rounded-t-full border border-white/80 bg-gradient-to-b from-white/50 to-blush-200/30 backdrop-blur-sm -translate-x-8 -translate-y-4"></div>
+
+          <!-- Left Editorial Callout ("Healthy Skin for a Brighter Tomorrow") -->
+          <div class="hidden sm:block absolute left-0 top-14 z-20 max-w-[140px] text-left">
+            <p class="text-xs leading-relaxed text-cocoa-muted font-medium">
+              Healthy Skin for a Brighter Tomorrow
+            </p>
+            <div class="w-10 h-[1px] bg-blush-500 mt-2.5"></div>
+          </div>
+
+          <!-- Central Product Artwork SVG: Glow Boost Serum 30ml Bottle + Retail Box + Crystal Pedestal -->
+          <div class="relative z-10 w-full max-w-[440px] mx-auto animate-float-slow">
+            <svg viewBox="0 0 460 500" class="w-full h-auto drop-shadow-2xl" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <!-- Frosted Blush Bottle Glass -->
+                <linearGradient id="frostedBottle" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#FCECE8"/>
+                  <stop offset="45%" stop-color="#F1CEC7"/>
+                  <stop offset="85%" stop-color="#DFACA4"/>
+                  <stop offset="100%" stop-color="#F6DCD7"/>
+                </linearGradient>
+                <!-- Rose Gold Collar -->
+                <linearGradient id="roseGoldCap" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#C8827B"/>
+                  <stop offset="30%" stop-color="#F4D3CB"/>
+                  <stop offset="60%" stop-color="#B96C66"/>
+                  <stop offset="100%" stop-color="#E7B8AF"/>
+                </linearGradient>
+                <!-- Retail Box Gradient -->
+                <linearGradient id="boxFront" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#F9EAE6"/>
+                  <stop offset="100%" stop-color="#EBD1CB"/>
+                </linearGradient>
+                <linearGradient id="boxSide" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#FFFDFC"/>
+                  <stop offset="100%" stop-color="#F2DFDA"/>
+                </linearGradient>
+                <!-- Crystal Pedestal -->
+                <linearGradient id="crystalGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.88"/>
+                  <stop offset="50%" stop-color="#F3DCD7" stop-opacity="0.55"/>
+                  <stop offset="100%" stop-color="#C4666E" stop-opacity="0.25"/>
+                </linearGradient>
+                <!-- Serum Liquid Splash -->
+                <linearGradient id="serumSplash" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.9"/>
+                  <stop offset="50%" stop-color="#F5D2CA" stop-opacity="0.65"/>
+                  <stop offset="100%" stop-color="#C4666E" stop-opacity="0.35"/>
+                </linearGradient>
+              </defs>
+
+              <!-- Soft Pink Lily Flower Accent Left -->
+              <g transform="translate(26, 225) rotate(-14)">
+                <ellipse cx="45" cy="70" rx="22" ry="52" transform="rotate(-35 45 70)" fill="#E7A5A1" fill-opacity="0.75"/>
+                <ellipse cx="72" cy="60" rx="20" ry="54" transform="rotate(10 72 60)" fill="#F2C3BE" fill-opacity="0.85"/>
+                <ellipse cx="88" cy="84" rx="22" ry="50" transform="rotate(52 88 84)" fill="#DC918D" fill-opacity="0.75"/>
+                <ellipse cx="55" cy="95" rx="24" ry="44" transform="rotate(-75 55 95)" fill="#F6D7D3" fill-opacity="0.85"/>
+                <circle cx="68" cy="76" r="8" fill="#C4666E" fill-opacity="0.5"/>
+              </g>
+
+              <!-- Outer Packaging Box (Tilted Right) -->
+              <g transform="translate(275, 130) rotate(13)">
+                <!-- Front Face -->
+                <rect x="0" y="0" width="96" height="225" rx="4" fill="url(#boxFront)" stroke="#E3C2BC" stroke-width="1"/>
+                <!-- Side Face (3D Perspective) -->
+                <polygon points="96,0 124,14 124,237 96,225" fill="url(#boxSide)" stroke="#E6CCC6" stroke-width="1"/>
+                <!-- Botanical Leaf Watermark on Box -->
+                <path d="M96 65C78 75 74 96 96 112Z" fill="#DF9E98" fill-opacity="0.35"/>
+                <path d="M96 132C76 144 75 168 96 184Z" fill="#DF9E98" fill-opacity="0.35"/>
+                <!-- Box Typography -->
+                <text x="48" y="76" text-anchor="middle" fill="#A84E56" font-family="'Plus Jakarta Sans', sans-serif" font-weight="600" font-size="14" letter-spacing="2">BELLAÉ</text>
+                <text x="48" y="88" text-anchor="middle" fill="#A84E56" font-family="'Plus Jakarta Sans', sans-serif" font-size="5.5" letter-spacing="2.8">SKINCARE</text>
+                <text x="48" y="132" text-anchor="middle" fill="#5B4244" font-family="'Plus Jakarta Sans', sans-serif" font-weight="500" font-size="8.5">Glow Boost Serum</text>
+                <text x="48" y="144" text-anchor="middle" fill="#8A6E70" font-family="'Plus Jakarta Sans', sans-serif" font-size="5.5">Brighten • Hydrate • Protect</text>
+                <text x="48" y="198" text-anchor="middle" fill="#8A6E70" font-family="'Plus Jakarta Sans', sans-serif" font-size="6.5">30 ml</text>
+              </g>
+
+              <!-- Main Dropper Bottle (Tilted Left) -->
+              <g transform="translate(120, 148) rotate(-13)">
+                <!-- White Rubber Dropper Bulb -->
+                <path d="M44 16C44 6 51 0 60 0C69 0 76 6 76 16V44H44V16Z" fill="#FFFDFC" stroke="#EAD7D3" stroke-width="1"/>
+                <!-- Rose Gold Metallic Collar -->
+                <rect x="33" y="42" width="54" height="36" rx="4" fill="url(#roseGoldCap)"/>
+                <line x1="33" y1="72" x2="87" y2="72" stroke="#9C524D" stroke-width="1" stroke-opacity="0.5"/>
+                <!-- Frosted Blush Glass Body -->
+                <rect x="14" y="78" width="92" height="172" rx="18" fill="url(#frostedBottle)" stroke="#FFFFFF" stroke-opacity="0.7" stroke-width="1.5"/>
+                <!-- Subtle Glass Highlight -->
+                <rect x="22" y="88" width="10" height="150" rx="5" fill="#FFFFFF" fill-opacity="0.35"/>
+                <!-- Bottle Label Typography -->
+                <text x="60" y="138" text-anchor="middle" fill="#A84E56" font-family="'Plus Jakarta Sans', sans-serif" font-weight="600" font-size="16" letter-spacing="2.2">BELLAÉ</text>
+                <!-- Mini Leaf on Bottle Logo -->
+                <path d="M92 124C94 121 97 120 99 119C98 122 96 124 92 124Z" fill="#A84E56"/>
+                <text x="60" y="150" text-anchor="middle" fill="#A84E56" font-family="'Plus Jakarta Sans', sans-serif" font-size="6" letter-spacing="3.2">SKINCARE</text>
+
+                <text x="60" y="186" text-anchor="middle" fill="#4D3739" font-family="'Plus Jakarta Sans', sans-serif" font-weight="600" font-size="9.5">Glow Boost Serum</text>
+                <text x="60" y="199" text-anchor="middle" fill="#7A6264" font-family="'Plus Jakarta Sans', sans-serif" font-size="6">Brighten • Hydrate • Protect</text>
+                <text x="60" y="232" text-anchor="middle" fill="#7A6264" font-family="'Plus Jakarta Sans', sans-serif" font-size="7">30 ml</text>
+              </g>
+
+              <!-- Dynamic Serum Swirl & Dew Droplets -->
+              <path d="M126 195C96 225 104 285 142 315C168 335 198 340 220 332C195 326 164 312 146 285C128 258 122 222 126 195Z" fill="url(#serumSplash)" stroke="#FFFFFF" stroke-opacity="0.8" stroke-width="1.2"/>
+              <circle cx="215" cy="168" r="9" fill="url(#serumSplash)" stroke="#FFFFFF" stroke-width="1.2"/>
+              <circle cx="212" cy="165" r="2.5" fill="#FFFFFF"/>
+              <circle cx="246" cy="212" r="8" fill="url(#serumSplash)" stroke="#FFFFFF" stroke-width="1.2"/>
+              <circle cx="244" cy="210" r="2" fill="#FFFFFF"/>
+              <circle cx="222" cy="365" r="8.5" fill="url(#serumSplash)" stroke="#FFFFFF" stroke-width="1.2"/>
+
+              <!-- Crystal Glass Pedestal Base -->
+              <g transform="translate(105, 385)">
+                <polygon points="15,0 235,0 250,24 235,62 15,62 0,24" fill="url(#crystalGrad)" stroke="#FFFFFF" stroke-width="1.5"/>
+                <polyline points="0,24 65,32 185,28 250,24" stroke="#FFFFFF" stroke-opacity="0.8" stroke-width="1.2"/>
+                <line x1="65" y1="32" x2="55" y2="62" stroke="#FFFFFF" stroke-opacity="0.7" stroke-width="1.2"/>
+                <line x1="185" y1="28" x2="195" y2="62" stroke="#FFFFFF" stroke-opacity="0.7" stroke-width="1.2"/>
+              </g>
+
+              <!-- Fallen Rose Petals on Marble Floor -->
+              <path d="M62 455C85 432 115 424 134 432C122 454 96 468 62 455Z" fill="url(#petalGrad1)"/>
+              <path d="M335 445C362 426 394 426 412 440C392 460 362 464 335 445Z" fill="url(#petalGrad1)"/>
+            </svg>
+          </div>
+
+          <!-- Right Floating Benefit Badges (Matching Key Art Right Icons) -->
+          <div class="hidden sm:flex flex-col gap-5 absolute right-0 top-1/2 -translate-y-1/2 z-20">
+            <!-- Pillar 1 -->
+            <div class="glass-card p-3 rounded-2xl shadow-glass flex flex-col items-center text-center w-28 animate-float-reverse">
+              <div class="w-10 h-10 rounded-full border border-blush-500/50 bg-blush-100/80 flex items-center justify-center text-blush-600 mb-1.5">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
+                </svg>
+              </div>
+              <span class="text-[11px] font-semibold leading-tight text-cocoa">Brightening<br/>Formula</span>
+            </div>
+
+            <!-- Pillar 2 -->
+            <div class="glass-card p-3 rounded-2xl shadow-glass flex flex-col items-center text-center w-28 animate-float-slow">
+              <div class="w-10 h-10 rounded-full border border-blush-500/50 bg-blush-100/80 flex items-center justify-center text-blush-600 mb-1.5">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0z"/>
+                </svg>
+              </div>
+              <span class="text-[11px] font-semibold leading-tight text-cocoa">Deep<br/>Hydration</span>
+            </div>
+
+            <!-- Pillar 3 -->
+            <div class="glass-card p-3 rounded-2xl shadow-glass flex flex-col items-center text-center w-28 animate-float-reverse">
+              <div class="w-10 h-10 rounded-full border border-blush-500/50 bg-blush-100/80 flex items-center justify-center text-blush-600 mb-1.5">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                </svg>
+              </div>
+              <span class="text-[11px] font-semibold leading-tight text-cocoa">Skin<br/>Protection</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Brand Values Marquee Strip -->
+  <div class="bg-blush-500 text-white py-3.5 overflow-hidden border-y border-blush-600">
+    <div class="max-w-7xl mx-auto px-4 flex flex-wrap items-center justify-center gap-x-8 gap-y-2 text-xs sm:text-sm font-medium tracking-wider uppercase">
+      <span>✦ Dermatologically Tested</span>
+      <span>✦ Non-Comedogenic & Lightweight</span>
+      <span>✦ BPOM Certified</span>
+      <span>✦ Cruelty-Free & Vegan Friendly</span>
+      <span>✦ Made for Gen Z Daily Glow</span>
+    </div>
+  </div>
+
+  <!-- 3. FLAGSHIP SPOTLIGHT — GLOW BOOST SERUM (30 ML) -->
+  <section id="glow-serum" class="py-20 lg:py-28 bg-blush-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Section Header -->
+      <div class="text-center max-w-2xl mx-auto mb-14">
+        <span class="text-xs font-bold uppercase tracking-[0.2em] text-blush-500">Flagship Hero Formula</span>
+        <h2 class="font-serif text-4xl sm:text-5xl font-semibold text-cocoa mt-2">
+          Glow Boost Serum <span class="text-blush-500 italic font-normal">(30 ml)</span>
+        </h2>
+        <p class="text-cocoa-muted mt-3 text-base">
+          Tiga manfaat esensial dalam satu botol kaca <em>frosted</em>: mencerahkan kulit kusam, mengunci kelembapan 24 jam, dan memperkuat <em>skin barrier</em> harianmu.
+        </p>
+      </div>
+
+      <!-- Interactive Ingredient & Pillar Explorer -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+        
+        <!-- Left: Pillar Selector Tabs -->
+        <div class="lg:col-span-5 flex flex-col justify-between gap-4">
+          <button onclick="selectPillar('brighten')" id="tab-brighten" class="pillar-tab text-left p-6 rounded-3xl border-2 border-blush-500 bg-blush-100/70 shadow-soft transition-all">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3.5">
+                <div class="w-11 h-11 rounded-2xl bg-blush-500 text-white flex items-center justify-center font-serif text-xl font-bold">01</div>
+                <div>
+                  <h3 class="font-bold text-lg text-cocoa">Brightening Formula</h3>
+                  <p class="text-xs text-blush-600 font-medium">5% Niacinamide + Ethyl Ascorbic Acid</p>
+                </div>
+              </div>
+              <span class="text-blush-500 text-xl">→</span>
+            </div>
+          </button>
+
+          <button onclick="selectPillar('hydrate')" id="tab-hydrate" class="pillar-tab text-left p-6 rounded-3xl border border-blush-200 bg-white hover:border-blush-400 transition-all">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3.5">
+                <div class="w-11 h-11 rounded-2xl bg-blush-200 text-blush-700 flex items-center justify-center font-serif text-xl font-bold">02</div>
+                <div>
+                  <h3 class="font-bold text-lg text-cocoa">Deep Hydration</h3>
+                  <p class="text-xs text-cocoa-muted font-medium">4D Hyaluronic Acid + Rose Water</p>
+                </div>
+              </div>
+              <span class="text-cocoa-muted text-xl">→</span>
+            </div>
+          </button>
+
+          <button onclick="selectPillar('protect')" id="tab-protect" class="pillar-tab text-left p-6 rounded-3xl border border-blush-200 bg-white hover:border-blush-400 transition-all">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3.5">
+                <div class="w-11 h-11 rounded-2xl bg-blush-200 text-blush-700 flex items-center justify-center font-serif text-xl font-bold">03</div>
+                <div>
+                  <h3 class="font-bold text-lg text-cocoa">Skin Protection</h3>
+                  <p class="text-xs text-cocoa-muted font-medium">Ceramide NP + Centella Asiatica</p>
+                </div>
+              </div>
+              <span class="text-cocoa-muted text-xl">→</span>
+            </div>
+          </button>
+        </div>
+
+        <!-- Right: Dynamic Detail Card -->
+        <div class="lg:col-span-7 bg-blush-100 rounded-3xl p-8 sm:p-10 border border-blush-200 flex flex-col justify-between relative overflow-hidden">
+          <div class="absolute -right-12 -bottom-12 w-56 h-56 rounded-full bg-blush-300/25 blur-2xl pointer-events-none"></div>
+          
+          <div id="pillar-content" class="relative z-10 space-y-6">
+            <!-- Populated dynamically via JS, pre-rendered with Pillar 1 -->
+            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white text-blush-600 text-xs font-semibold shadow-sm">
+              <span>✨ Active Highlight</span>
+            </div>
+            <h3 class="font-serif text-3xl sm:text-4xl font-semibold text-cocoa">
+              Kilau Alami Merata Tanpa Rasa Perih
+            </h3>
+            <p class="text-cocoa-muted leading-relaxed text-base">
+              Kombinasi <strong>5% Pharmaceutical-Grade Niacinamide</strong> dan turunan <strong>Vitamin C stabil</strong> bekerja lembut menyamarkan noda bekas jerawat, meratakan warna kulit kusam akibat paparan layar & polusi, serta memberikan efek <em>glass-skin</em> segar seketika.
+            </p>
+            <div class="grid grid-cols-3 gap-4 pt-2">
+              <div class="bg-white/90 p-4 rounded-2xl border border-blush-200/70">
+                <div class="font-serif text-2xl sm:text-3xl font-bold text-blush-500">96%</div>
+                <p class="text-xs text-cocoa-muted mt-1">Kulit tampak lebih cerah segar dalam 14 hari</p>
+              </div>
+              <div class="bg-white/90 p-4 rounded-2xl border border-blush-200/70">
+                <div class="font-serif text-2xl sm:text-3xl font-bold text-blush-500">0%</div>
+                <p class="text-xs text-cocoa-muted mt-1">Alkohol, paraben, & pewarna buatan</p>
+              </div>
+              <div class="bg-white/90 p-4 rounded-2xl border border-blush-200/70">
+                <div class="font-serif text-2xl sm:text-3xl font-bold text-blush-500">pH 5.5</div>
+                <p class="text-xs text-cocoa-muted mt-1">Seimbang dengan pH alami kulit sehat</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="relative z-10 mt-8 pt-6 border-t border-blush-200 flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <span class="text-xs text-cocoa-muted block">Harga Spesial Peluncuran</span>
+              <span class="text-2xl font-bold text-cocoa">Rp 189.000</span>
+              <span class="text-sm text-cocoa-light line-through ml-2">Rp 229.000</span>
+            </div>
+            <button onclick="addToCart('glow-boost-serum')" class="px-6 py-3.5 rounded-full bg-blush-500 hover:bg-blush-600 text-white text-sm font-semibold shadow-md transition-all flex items-center gap-2">
+              <span>+ Tambah ke Tas</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. FULL SKINCARE ROUTINE COLLECTION (Transferable Product Line) -->
+  <section id="collection" class="py-20 lg:py-28 bg-blush-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-[0.2em] text-blush-500">Complete Daily Ritual</span>
+          <h2 class="font-serif text-4xl sm:text-5xl font-semibold text-cocoa mt-2">
+            The BELLAÉ Collection
+          </h2>
+        </div>
+
+        <!-- Category Filter Buttons -->
+        <div class="flex flex-wrap gap-2" id="filter-buttons">
+          <button onclick="filterProducts('all')" data-filter="all" class="filter-btn px-5 py-2 rounded-full text-sm font-semibold bg-blush-500 text-white shadow-sm transition-all">
+            Semua Produk
+          </button>
+          <button onclick="filterProducts('serum')" data-filter="serum" class="filter-btn px-5 py-2 rounded-full text-sm font-medium bg-blush-50 text-cocoa border border-blush-200 hover:border-blush-400 transition-all">
+            Serum
+          </button>
+          <button onclick="filterProducts('essentials')" data-filter="essentials" class="filter-btn px-5 py-2 rounded-full text-sm font-medium bg-blush-50 text-cocoa border border-blush-200 hover:border-blush-400 transition-all">
+            Daily Essentials
+          </button>
+          <button onclick="filterProducts('bundle')" data-filter="bundle" class="filter-btn px-5 py-2 rounded-full text-sm font-medium bg-blush-50 text-cocoa border border-blush-200 hover:border-blush-400 transition-all">
+            Value Bundle
+          </button>
+        </div>
+      </div>
+
+      <!-- Product Grid -->
+      <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Rendered dynamically by JavaScript -->
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. INTERACTIVE 'FIND YOUR GLOW' SKIN QUIZ -->
+  <section id="skin-quiz" class="py-20 lg:py-28 bg-blush-50 relative overflow-hidden">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="bg-blush-100 rounded-[2.5rem] p-8 sm:p-12 border border-blush-200 shadow-soft">
+        <div class="text-center max-w-xl mx-auto mb-8">
+          <span class="px-3.5 py-1 rounded-full bg-blush-200 text-blush-700 text-xs font-bold uppercase tracking-wider">Personalized Ritual</span>
+          <h2 class="font-serif text-3xl sm:text-4xl font-semibold text-cocoa mt-3">
+            Find Your Personal Glow ✦
+          </h2>
+          <p class="text-sm sm:text-base text-cocoa-muted mt-2">
+            Setiap kulit unik dan punya pancarannya sendiri. Jawab 3 pertanyaan singkat untuk menemukan kombinasi BELLAÉ yang paling pas untukmu!
+          </p>
+        </div>
+
+        <!-- Quiz Progress Bar -->
+        <div class="max-w-md mx-auto mb-8">
+          <div class="flex justify-between text-xs font-semibold text-cocoa-muted mb-2">
+            <span id="quiz-step-label">Langkah 1 dari 3</span>
+            <span id="quiz-percent">33%</span>
+          </div>
+          <div class="w-full h-2 bg-blush-200 rounded-full overflow-hidden">
+            <div id="quiz-progress-bar" class="h-full bg-blush-500 rounded-full transition-all duration-500" style="width: 33%"></div>
+          </div>
+        </div>
+
+        <!-- Dynamic Quiz Stage -->
+        <div id="quiz-container" class="min-h-[240px] flex flex-col justify-center">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. BRAND STORY & GEN Z COMMUNITY ("Your Skin, Your Glow") -->
+  <section id="brand-story" class="py-20 lg:py-28 bg-blush-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        <!-- Left Brand Philosophy Card -->
+        <div class="lg:col-span-6 space-y-6">
+          <span class="text-xs font-bold uppercase tracking-[0.2em] text-blush-500">Our Brand Philosophy</span>
+          <h2 class="font-serif text-4xl sm:text-5xl font-semibold text-cocoa leading-tight">
+            Bukan Tentang Menjadi Seperti Orang Lain, Tapi Merayakan Kilau Kulitmu Sendiri.
+          </h2>
+          <p class="text-cocoa-muted leading-relaxed text-base">
+            <strong>BELLAÉ SKINCARE</strong> lahir dari keyakinan bahwa setiap perempuan memiliki kondisi kulit dan pancaran kecantikan yang berbeda. Melalui tagline <em>"Your Skin, Your Glow"</em>, kami mengajak generasi muda usia 18–25 tahun untuk merawat kulit dengan penuh rasa percaya diri—tanpa tekanan standar kesempurnaan yang tidak realistis.
+          </p>
+
+          <!-- 3 Brand Characters Grid (From Brand Identity Brief) -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+            <div class="bg-blush-50 p-5 rounded-2xl border border-blush-200">
+              <div class="text-blush-500 font-serif text-2xl font-bold mb-1">Modern</div>
+              <p class="text-xs text-cocoa-muted leading-relaxed">Identitas clean, estetika kekinian, dan formulasi aktif yang relevan dengan gaya hidup digital.</p>
+            </div>
+            <div class="bg-blush-50 p-5 rounded-2xl border border-blush-200">
+              <div class="text-blush-500 font-serif text-2xl font-bold mb-1">Confident</div>
+              <p class="text-xs text-cocoa-muted leading-relaxed">Membangun rasa bangga dengan kulit sehatmu sendiri tanpa perlu membandingkan diri.</p>
+            </div>
+            <div class="bg-blush-50 p-5 rounded-2xl border border-blush-200">
+              <div class="text-blush-500 font-serif text-2xl font-bold mb-1">Fresh</div>
+              <p class="text-xs text-cocoa-muted leading-relaxed">Tekstur ringan seperti embun pagi, cerah, youthful, dan menyenangkan dipakai setiap hari.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Gen Z Community Love (@bellae.skincare) -->
+        <div class="lg:col-span-6 space-y-5">
+          <div class="flex items-center justify-between">
+            <h3 class="font-serif text-2xl font-semibold text-cocoa">Glow Stories dari #BellaeBesties</h3>
+            <span class="text-xs font-semibold text-blush-600 bg-blush-200/70 px-3 py-1 rounded-full">@bellae.skincare</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="bg-blush-50 p-6 rounded-3xl border border-blush-200 shadow-petal space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-amber-500 text-sm">★★★★★</span>
+                <span class="text-[11px] text-cocoa-light">Verified Buyer</span>
+              </div>
+              <p class="text-sm text-cocoa leading-relaxed">
+                "Teksturnya cair-gel ringan banget, langsung meresap sebelum kuliah pagi! Bekas jerawat di pipi memudar dalam 2 minggu dan muka kelihatan fresh sehat."
+              </p>
+              <div class="pt-2 flex items-center gap-3">
+                <div class="w-9 h-9 rounded-full bg-blush-300 text-cocoa font-bold text-xs flex items-center justify-center">NA</div>
+                <div>
+                  <div class="text-xs font-bold text-cocoa">Nadia Aulia, 21</div>
+                  <div class="text-[11px] text-cocoa-muted">Kulit Kombinasi • Glow Boost Serum</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-blush-50 p-6 rounded-3xl border border-blush-200 shadow-petal space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-amber-500 text-sm">★★★★★</span>
+                <span class="text-[11px] text-cocoa-light">Verified Buyer</span>
+              </div>
+              <p class="text-sm text-cocoa leading-relaxed">
+                "Suka banget sama packaging-nya yang aesthetic pink frosted! Lebih suka lagi karena nggak bikin kulit berminyak atau pilling pas ditimpa sunscreen."
+              </p>
+              <div class="pt-2 flex items-center gap-3">
+                <div class="w-9 h-9 rounded-full bg-blush-500 text-white font-bold text-xs flex items-center justify-center">CL</div>
+                <div>
+                  <div class="text-xs font-bold text-cocoa">Clarissa Putri, 19</div>
+                  <div class="text-[11px] text-cocoa-muted">Kulit Sensitif • 4-Step Glow Ritual</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Newsletter / Glow Club Card -->
+          <div class="bg-cocoa text-blush-50 p-6 sm:p-8 rounded-3xl flex flex-col sm:flex-row items-center justify-between gap-5">
+            <div>
+              <span class="text-[11px] uppercase tracking-widest text-blush-300 font-semibold">Join Bellaé Glow Club</span>
+              <h4 class="font-serif text-2xl font-semibold mt-1">Dapatkan Voucher Diskon 15%</h4>
+              <p class="text-xs text-blush-200 mt-1">Gunakan kode <strong class="text-white underline">MYGLOW15</strong> saat checkout pertamamu.</p>
+            </div>
+            <button onclick="copyPromoCode()" class="w-full sm:w-auto px-5 py-3 rounded-full bg-blush-500 hover:bg-blush-600 text-white text-xs font-bold uppercase tracking-wider transition-all shrink-0">
+              Salin Kode: MYGLOW15
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-blush-50 border-t border-blush-200 pt-16 pb-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-blush-200">
+        
+        <div class="md:col-span-5 space-y-4">
+          <!-- Brand Logo -->
+          <svg viewBox="0 0 230 56" class="h-12 w-auto" fill="none">
+            <text x="0" y="34" fill="#C4666E" font-family="'Plus Jakarta Sans', sans-serif" font-weight="500" font-size="31" letter-spacing="4.5">BELLAE</text>
+            <path d="M188 11.5C187.2 9.8 185.5 9.2 185.5 9.2C185.5 9.2 186.2 11.5 188.2 12.1C191.8 12.8 197.5 9.5 199.8 3.2C193.4 3.5 189.2 7.2 188 11.5Z" fill="#C4666E"/>
+            <text x="35" y="50" fill="#C4666E" font-family="'Plus Jakarta Sans', sans-serif" font-weight="400" font-size="10.2" letter-spacing="6.8">SKINCARE</text>
+          </svg>
+          <p class="font-serif italic text-xl text-blush-600">"Your Skin, Your Glow."</p>
+          <p class="text-sm text-cocoa-muted max-w-sm leading-relaxed">
+            Healthy Skin for a Brighter Tomorrow. Rangkaian perawatan kulit modern yang ringan, aman, dan dirancang untuk merayakan kilau alami perempuan Indonesia.
+          </p>
+        </div>
+
+        <div class="md:col-span-2 space-y-3 text-sm">
+          <h4 class="font-bold text-cocoa uppercase tracking-wider text-xs">Explore</h4>
+          <ul class="space-y-2 text-cocoa-muted">
+            <li><a href="#home" class="hover:text-blush-500 transition-colors">Home</a></li>
+            <li><a href="#glow-serum" class="hover:text-blush-500 transition-colors">Glow Boost Serum</a></li>
+            <li><a href="#collection" class="hover:text-blush-500 transition-colors">All Products</a></li>
+            <li><a href="#skin-quiz" class="hover:text-blush-500 transition-colors">Skin Quiz</a></li>
+          </ul>
+        </div>
+
+        <div class="md:col-span-2 space-y-3 text-sm">
+          <h4 class="font-bold text-cocoa uppercase tracking-wider text-xs">Official Store</h4>
+          <ul class="space-y-2 text-cocoa-muted">
+            <li><a href="#collection" class="hover:text-blush-500 transition-colors">Bellaé Official Web</a></li>
+            <li><a href="#collection" class="hover:text-blush-500 transition-colors">Shopee Mall</a></li>
+            <li><a href="#collection" class="hover:text-blush-500 transition-colors">Tokopedia Official</a></li>
+            <li><a href="#collection" class="hover:text-blush-500 transition-colors">TikTok Shop</a></li>
+          </ul>
+        </div>
+
+        <div class="md:col-span-3 space-y-3 text-sm">
+          <h4 class="font-bold text-cocoa uppercase tracking-wider text-xs">Connect With Us</h4>
+          <p class="text-cocoa-muted">Ikuti tips skincare harian & promo eksklusif di Instagram kami:</p>
+          <a href="#brand-story" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-blush-100 border border-blush-200 text-blush-600 font-semibold hover:bg-blush-500 hover:text-white transition-all">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
+              <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"></path>
+            </svg>
+            <span>@bellae.skincare</span>
+          </a>
+        </div>
+
+      </div>
+
+      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-cocoa-muted">
+        <p>© 2026 BELLAÉ SKINCARE. All rights reserved. Healthy Skin for a Brighter Tomorrow.</p>
+        <div class="flex items-center gap-5">
+          <span>BPOM Certified</span>
+          <span>•</span>
+          <span>Cruelty-Free</span>
+          <span>•</span>
+          <span>Made with Love</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 7. SLIDE-OVER SHOPPING CART DRAWER -->
+  <div id="cart-overlay" onclick="toggleCart(false)" class="fixed inset-0 bg-cocoa/40 backdrop-blur-xs z-50 hidden transition-opacity"></div>
+  <aside id="cart-drawer" class="fixed top-0 right-0 h-full w-full max-w-md bg-blush-50 z-50 shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col">
+    <!-- Drawer Header -->
+    <div class="p-6 border-b border-blush-200 flex items-center justify-between bg-white">
+      <div class="flex items-center gap-2.5">
+        <h3 class="font-serif text-2xl font-semibold text-cocoa">Your Glow Bag</h3>
+        <span id="drawer-count" class="px-2.5 py-0.5 rounded-full bg-blush-100 text-blush-600 text-xs font-bold">0 item</span>
+      </div>
+      <button onclick="toggleCart(false)" class="p-2 rounded-full hover:bg-blush-100 text-cocoa transition-colors" aria-label="Tutup Keranjang">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Free Shipping Progress Bar -->
+    <div class="px-6 py-3.5 bg-blush-100 border-b border-blush-200">
+      <p id="shipping-text" class="text-xs font-medium text-cocoa mb-2">
+        Tambah <strong class="text-blush-600">Rp 250.000</strong> lagi untuk <strong>Gratis Ongkir</strong> ke seluruh Indonesia!
+      </p>
+      <div class="w-full h-2 bg-blush-200 rounded-full overflow-hidden">
+        <div id="shipping-bar" class="h-full bg-blush-500 rounded-full transition-all duration-300" style="width: 0%"></div>
+      </div>
+    </div>
+
+    <!-- Cart Items Container -->
+    <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-4">
+      <!-- Populated dynamically -->
+    </div>
+
+    <!-- Drawer Footer / Checkout Summary -->
+    <div id="cart-footer" class="p-6 bg-white border-t border-blush-200 space-y-4">
+      <!-- Promo Code Input -->
+      <div class="flex gap-2">
+        <input id="promo-input" type="text" placeholder="Kode promo (coba: MYGLOW15)" class="flex-1 px-4 py-2.5 rounded-full bg-blush-50 border border-blush-200 text-xs text-cocoa focus:outline-none focus:border-blush-500 uppercase" />
+        <button onclick="applyPromo()" class="px-4 py-2.5 rounded-full bg-blush-200 hover:bg-blush-300 text-cocoa text-xs font-bold transition-colors">
+          Apply
+        </button>
+      </div>
+
+      <div class="space-y-1.5 text-sm">
+        <div class="flex justify-between text-cocoa-muted">
+          <span>Subtotal</span>
+          <span id="cart-subtotal">Rp 0</span>
+        </div>
+        <div id="discount-row" class="hidden flex justify-between text-emerald-600 font-medium">
+          <span>Diskon Promo (15%)</span>
+          <span id="cart-discount">-Rp 0</span>
+        </div>
+        <div class="flex justify-between text-base font-bold text-cocoa pt-2 border-t border-blush-100">
+          <span>Total Pembayaran</span>
+          <span id="cart-total">Rp 0</span>
+        </div>
+      </div>
+
+      <button onclick="checkoutNow()" class="w-full py-4 rounded-full bg-blush-500 hover:bg-blush-600 text-white font-semibold text-sm shadow-soft transition-all flex items-center justify-center gap-2">
+        <span>Checkout Sekarang</span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+        </svg>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Quick View / Checkout Confirmation Modal -->
+  <div id="modal-backdrop" class="fixed inset-0 bg-cocoa/50 backdrop-blur-xs z-[60] hidden items-center justify-center p-4">
+    <div id="modal-box" class="bg-blush-50 rounded-3xl max-w-lg w-full p-6 sm:p-8 border border-blush-200 shadow-2xl relative animate-float-slow" style="animation: none;">
+      <!-- Content injected dynamically -->
+    </div>
+  </div>
+
+  <!-- APPLICATION LOGIC -->
+  <script>
+    // 1. PRODUCT CATALOG DATA (Transferable Product Line per Brand Brief)
+    const PRODUCTS = [
+      {
+        id: 'glow-boost-serum',
+        name: 'Glow Boost Serum',
+        volume: '30 ml',
+        category: 'serum',
+        badge: 'Flagship Bestseller',
+        tagline: 'Brighten • Hydrate • Protect',
+        price: 189000,
+        originalPrice: 229000,
+        description: 'Serum ikonik BELLAÉ dengan 5% Niacinamide, Vitamin C stabil, dan 4D Hyaluronic Acid untuk kulit cerah, kenyal, dan terlindungi.',
+        keyIngredients: ['5% Niacinamide', 'Ethyl Ascorbic Acid', '4D Hyaluronic Acid', 'Ceramide NP'],
+        artType: 'serum'
+      },
+      {
+        id: 'gentle-cloud-cleanser',
+        name: 'Gentle Cloud Cleanser',
+        volume: '100 ml',
+        category: 'essentials',
+        badge: 'pH 5.5 Balanced',
+        tagline: 'Purify • Soothe • Refresh',
+        price: 129000,
+        originalPrice: null,
+        description: 'Pembersih wajah berbusa lembut seperti awan dengan Amino Acid & Damask Rose Water yang membersihkan tanpa rasa ketarik.',
+        keyIngredients: ['Amino Acid Surfactants', 'Damask Rose Water', 'Panthenol B5'],
+        artType: 'cleanser'
+      },
+      {
+        id: 'dewy-barrier-moisturizer',
+        name: 'Dewy Barrier Moisturizer',
+        volume: '50 ml',
+        category: 'essentials',
+        badge: '24H Moisture Lock',
+        tagline: 'Plump • Calm • Strengthen',
+        price: 165000,
+        originalPrice: null,
+        description: 'Gel-cream ringan yang meleleh di kulit untuk memperkuat skin barrier dan memberikan tampilan dewy segar seharian.',
+        keyIngredients: ['3x Ceramide Complex', 'Centella Asiatica', 'Squalane'],
+        artType: 'jar'
+      },
+      {
+        id: 'invisible-silk-sunscreen',
+        name: 'Invisible Silk Sunscreen SPF 50+ PA++++',
+        volume: '40 ml',
+        category: 'essentials',
+        badge: 'Zero Whitecast',
+        tagline: 'Shield • Glow • Breathable',
+        price: 155000,
+        originalPrice: 175000,
+        description: 'Tabir surya harian bertekstur serum-lotion tanpa whitecast yang melindungi dari sinar UVA/UVB & blue light.',
+        keyIngredients: ['Hybrid UV Filters', 'Niacinamide', 'Aloe & Green Tea Extract'],
+        artType: 'tube'
+      },
+      {
+        id: 'complete-glow-ritual',
+        name: 'Complete 4-Step Glow Ritual Bundle',
+        volume: 'Full Size Set',
+        category: 'bundle',
+        badge: 'Hemat Rp 118.000',
+        tagline: 'Cleanse • Boost • Hydrate • Protect',
+        price: 520000,
+        originalPrice: 638000,
+        description: 'Paket lengkap 4 langkah perawatan harian BELLAÉ: Gentle Cloud Cleanser, Glow Boost Serum, Dewy Barrier Moisturizer, dan Invisible Silk Sunscreen.',
+        keyIngredients: ['Full 4-Step Routine', 'Free Rose-Gold Pouch'],
+        artType: 'bundle'
+      },
+      {
+        id: 'duo-glow-starter',
+        name: 'Daily Glow Duo (Serum + Sunscreen)',
+        volume: '30 ml + 40 ml',
+        category: 'bundle',
+        badge: 'Gen Z Favorite',
+        tagline: 'Morning Glow Essentials',
+        price: 315000,
+        originalPrice: 344000,
+        description: 'Kombinasi pagi praktis untuk mencerahkan sekaligus melindungi kulit aktifmu sebelum beraktivitas di luar ruangan.',
+        keyIngredients: ['Glow Boost Serum', 'Invisible Silk Sunscreen'],
+        artType: 'duo'
+      }
+    ];
+
+    // Custom SVG Product Illustrations matching the frosted blush & rose-gold aesthetic
+    function getProductSVG(type) {
+      if (type === 'serum') {
+        return `
+          <svg viewBox="0 0 180 200" class="w-36 h-40 mx-auto drop-shadow-md" fill="none">
+            <path d="M78 16C78 9 83 5 90 5C97 5 102 9 102 16V36H78V16Z" fill="#FFFDFC" stroke="#E5D1CD"/>
+            <rect x="70" y="34" width="40" height="24" rx="3" fill="#D5928B"/>
+            <rect x="56" y="58" width="68" height="122" rx="14" fill="#F2CFC8" stroke="#FFFFFF" stroke-width="1.5"/>
+            <rect x="63" y="66" width="8" height="104" rx="4" fill="#FFFFFF" fill-opacity="0.4"/>
+            <text x="90" y="106" text-anchor="middle" fill="#A84E56" font-size="11" font-weight="600" letter-spacing="1.5">BELLAÉ</text>
+            <text x="90" y="116" text-anchor="middle" fill="#A84E56" font-size="4.5" letter-spacing="2.2">SKINCARE</text>
+            <text x="90" y="140" text-anchor="middle" fill="#3D2C2E" font-size="6.8" font-weight="600">Glow Boost Serum</text>
+            <text x="90" y="168" text-anchor="middle" fill="#7A6264" font-size="5.5">30 ml</text>
+          </svg>`;
+      }
+      if (type === 'cleanser') {
+        return `
+          <svg viewBox="0 0 180 200" class="w-36 h-40 mx-auto drop-shadow-md" fill="none">
+            <rect x="76" y="12" width="28" height="14" rx="3" fill="#FFFDFC" stroke="#E5D1CD"/>
+            <rect x="68" y="26" width="44" height="18" rx="3" fill="#D5928B"/>
+            <rect x="58" y="44" width="64" height="138" rx="16" fill="#F7DFDA" stroke="#FFFFFF" stroke-width="1.5"/>
+            <text x="90" y="96" text-anchor="middle" fill="#A84E56" font-size="11" font-weight="600" letter-spacing="1.5">BELLAÉ</text>
+            <text x="90" y="106" text-anchor="middle" fill="#A84E56" font-size="4.5" letter-spacing="2.2">SKINCARE</text>
+            <text x="90" y="132" text-anchor="middle" fill="#3D2C2E" font-size="6.5" font-weight="600">Gentle Cloud Cleanser</text>
+            <text x="90" y="166" text-anchor="middle" fill="#7A6264" font-size="5.5">100 ml</text>
+          </svg>`;
+      }
+      if (type === 'jar') {
+        return `
+          <svg viewBox="0 0 180 200" class="w-36 h-40 mx-auto drop-shadow-md" fill="none">
+            <rect x="44" y="68" width="92" height="24" rx="6" fill="#D5928B"/>
+            <rect x="48" y="92" width="84" height="84" rx="18" fill="#F1CCC5" stroke="#FFFFFF" stroke-width="1.5"/>
+            <text x="90" y="126" text-anchor="middle" fill="#A84E56" font-size="11" font-weight="600" letter-spacing="1.5">BELLAÉ</text>
+            <text x="90" y="144" text-anchor="middle" fill="#3D2C2E" font-size="6.5" font-weight="600">Dewy Moisturizer</text>
+            <text x="90" y="162" text-anchor="middle" fill="#7A6264" font-size="5.5">50 ml</text>
+          </svg>`;
+      }
+      if (type === 'tube') {
+        return `
+          <svg viewBox="0 0 180 200" class="w-36 h-40 mx-auto drop-shadow-md" fill="none">
+            <path d="M56 22H124L116 146H64L56 22Z" fill="#F6DCD6" stroke="#FFFFFF" stroke-width="1.5"/>
+            <rect x="72" y="146" width="36" height="32" rx="4" fill="#D5928B"/>
+            <text x="90" y="72" text-anchor="middle" fill="#A84E56" font-size="10.5" font-weight="600" letter-spacing="1.5">BELLAÉ</text>
+            <text x="90" y="96" text-anchor="middle" fill="#3D2C2E" font-size="6.5" font-weight="600">Invisible Silk</text>
+            <text x="90" y="106" text-anchor="middle" fill="#3D2C2E" font-size="6.5" font-weight="600">Sunscreen SPF 50+</text>
+            <text x="90" y="130" text-anchor="middle" fill="#7A6264" font-size="5.5">40 ml</text>
+          </svg>`;
+      }
+      // Bundle / Duo illustration
+      return `
+        <svg viewBox="0 0 180 200" class="w-36 h-40 mx-auto drop-shadow-md" fill="none">
+          <rect x="34" y="54" width="46" height="122" rx="10" fill="#F6DCD6" stroke="#FFFFFF" stroke-width="1.2"/>
+          <rect x="44" y="38" width="26" height="16" rx="2" fill="#D5928B"/>
+          <rect x="72" y="68" width="52" height="110" rx="12" fill="#EFC6BE" stroke="#FFFFFF" stroke-width="1.5"/>
+          <rect x="85" y="50" width="26" height="18" rx="2" fill="#C4666E"/>
+          <rect x="114" y="96" width="44" height="82" rx="10" fill="#F8E4E0" stroke="#FFFFFF" stroke-width="1.2"/>
+          <text x="98" y="118" text-anchor="middle" fill="#A84E56" font-size="9" font-weight="700" letter-spacing="1">BELLAÉ</text>
+          <text x="98" y="132" text-anchor="middle" fill="#3D2C2E" font-size="6" font-weight="600">GLOW SET</text>
+        </svg>`;
+    }
+
+    // 2. FLAGSHIP PILLARS INTERACTIVE SWITCHER
+    const PILLARS_DATA = {
+      brighten: {
+        tag: '✨ Active Highlight • 01',
+        title: 'Kilau Alami Merata Tanpa Rasa Perih',
+        desc: 'Kombinasi <strong>5% Pharmaceutical-Grade Niacinamide</strong> dan turunan <strong>Vitamin C stabil</strong> bekerja lembut menyamarkan noda bekas jerawat, meratakan warna kulit kusam akibat paparan layar & polusi, serta memberikan efek <em>glass-skin</em> segar seketika.',
+        stats: [
+          { val: '96%', label: 'Kulit tampak lebih cerah segar dalam 14 hari' },
+          { val: '0%', label: 'Alkohol, paraben, & pewarna buatan' },
+          { val: 'pH 5.5', label: 'Seimbang dengan pH alami kulit sehat' }
+        ]
+      },
+      hydrate: {
+        tag: '💧 Moisture Lock • 02',
+        title: 'Hidrasi Berlapis Hingga 24 Jam Penuh',
+        desc: 'Diformulasikan dengan <strong>4D Multi-Molecular Hyaluronic Acid</strong> dan <strong>Damask Rose Water</strong> yang menyerap cepat ke lapisan epidermis tanpa rasa lengket, menjaga kulit tetap kenyal meski berada di ruangan ber-AC seharian.',
+        stats: [
+          { val: '+142%', label: 'Peningkatan kelembapan instan setelah pemakaian' },
+          { val: '24 Jam', label: 'Kunci hidrasi tanpa menyumbat pori' },
+          { val: '3 Detik', label: 'Waktu penyerapan tekstur cair-gel ringan' }
+        ]
+      },
+      protect: {
+        tag: '🛡️ Barrier Shield • 03',
+        title: 'Perisai Lembut untuk Skin Barrier Kuat',
+        desc: 'Diperkaya <strong>Ceramide NP</strong> dan <strong>Centella Asiatica</strong> untuk menenangkan kemerahan ringan, memperkuat pertahanan alami kulit dari radikal bebas, serta mempersiapkan kulit agar lebih sehat di hari esok.',
+        stats: [
+          { val: '94%', label: 'Setuju kulit terasa lebih tenang & halus' },
+          { val: '100%', label: 'Non-comedogenic & aman untuk kulit sensitif' },
+          { val: 'Daily', label: 'Aman digunakan pagi & malam setiap hari' }
+        ]
+      }
+    };
+
+    function selectPillar(key) {
+      const data = PILLARS_DATA[key];
+      const container = document.getElementById('pillar-content');
+      container.innerHTML = `
+        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white text-blush-600 text-xs font-semibold shadow-sm">
+          <span>${data.tag}</span>
+        </div>
+        <h3 class="font-serif text-3xl sm:text-4xl font-semibold text-cocoa">${data.title}</h3>
+        <p class="text-cocoa-muted leading-relaxed text-base">${data.desc}</p>
+        <div class="grid grid-cols-3 gap-4 pt-2">
+          ${data.stats.map(s => `
+            <div class="bg-white/90 p-4 rounded-2xl border border-blush-200/70">
+              <div class="font-serif text-2xl sm:text-3xl font-bold text-blush-500">${s.val}</div>
+              <p class="text-xs text-cocoa-muted mt-1">${s.label}</p>
+            </div>
+          `).join('')}
+        </div>
+      `;
+
+      // Update Tab Active Styles
+      ['brighten', 'hydrate', 'protect'].forEach(k => {
+        const btn = document.getElementById(`tab-${k}`);
+        const numBox = btn.querySelector('div > div > div');
+        if (k === key) {
+          btn.className = 'pillar-tab text-left p-6 rounded-3xl border-2 border-blush-500 bg-blush-100/70 shadow-soft transition-all';
+          numBox.className = 'w-11 h-11 rounded-2xl bg-blush-500 text-white flex items-center justify-center font-serif text-xl font-bold';
+        } else {
+          btn.className = 'pillar-tab text-left p-6 rounded-3xl border border-blush-200 bg-white hover:border-blush-400 transition-all';
+          numBox.className = 'w-11 h-11 rounded-2xl bg-blush-200 text-blush-700 flex items-center justify-center font-serif text-xl font-bold';
+        }
+      });
+    }
+
+    // 3. PRODUCT GRID RENDER & FILTER
+    function formatRupiah(num) {
+      return 'Rp ' + num.toLocaleString('id-ID');
+    }
+
+    function renderProducts(filter = 'all') {
+      const grid = document.getElementById('product-grid');
+      const filtered = filter === 'all' ? PRODUCTS : PRODUCTS.filter(p => p.category === filter);
+
+      grid.innerHTML = filtered.map(product => `
+        <div class="group bg-blush-50 rounded-3xl p-6 border border-blush-200 hover:border-blush-400 hover:shadow-soft transition-all flex flex-col justify-between">
+          <div>
+            <!-- Top Badge & Volume -->
+            <div class="flex items-center justify-between gap-2 mb-4">
+              <span class="px-3 py-1 rounded-full bg-blush-200/80 text-blush-700 text-[11px] font-bold">
+                ${product.badge}
+              </span>
+              <span class="text-xs font-medium text-cocoa-muted">${product.volume}</span>
+            </div>
+
+            <!-- Visual Artwork Frame -->
+            <div onclick="openQuickView('${product.id}')" class="cursor-pointer relative py-6 px-4 rounded-2xl bg-gradient-to-b from-blush-100 to-blush-200/40 mb-5 overflow-hidden group-hover:scale-[1.02] transition-transform">
+              ${getProductSVG(product.artType)}
+              <span class="absolute bottom-3 right-3 px-2.5 py-1 rounded-full bg-white/90 text-[10px] font-semibold text-cocoa opacity-0 group-hover:opacity-100 transition-opacity shadow-xs">
+                Quick View ✦
+              </span>
+            </div>
+
+            <!-- Product Info -->
+            <p class="text-[11px] font-semibold uppercase tracking-wider text-blush-500">${product.tagline}</p>
+            <h3 onclick="openQuickView('${product.id}')" class="cursor-pointer font-serif text-2xl font-semibold text-cocoa mt-1 group-hover:text-blush-600 transition-colors">
+              ${product.name}
+            </h3>
+            <p class="text-xs text-cocoa-muted mt-2 line-clamp-2 leading-relaxed">
+              ${product.description}
+            </p>
+          </div>
+
+          <!-- Price & Add Button -->
+          <div class="pt-5 mt-5 border-t border-blush-200/70 flex items-center justify-between gap-3">
+            <div>
+              <div class="text-lg font-bold text-cocoa">${formatRupiah(product.price)}</div>
+              ${product.originalPrice ? `<div class="text-xs text-cocoa-light line-through">${formatRupiah(product.originalPrice)}</div>` : ''}
+            </div>
+            <button onclick="addToCart('${product.id}')" class="px-5 py-2.5 rounded-full bg-blush-500 hover:bg-blush-600 text-white text-xs font-semibold shadow-sm hover:shadow transition-all">
+              + Add to Bag
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function filterProducts(category) {
+      renderProducts(category);
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        if (btn.dataset.filter === category) {
+          btn.className = 'filter-btn px-5 py-2 rounded-full text-sm font-semibold bg-blush-500 text-white shadow-sm transition-all';
+        } else {
+          btn.className = 'filter-btn px-5 py-2 rounded-full text-sm font-medium bg-blush-50 text-cocoa border border-blush-200 hover:border-blush-400 transition-all';
+        }
+      });
+    }
+
+    // Quick View Modal
+    function openQuickView(productId) {
+      const p = PRODUCTS.find(item => item.id === productId);
+      if (!p) return;
+
+      const backdrop = document.getElementById('modal-backdrop');
+      const box = document.getElementById('modal-box');
+
+      box.innerHTML = `
+        <button onclick="closeModal()" class="absolute top-5 right-5 p-2 rounded-full bg-blush-100 hover:bg-blush-200 text-cocoa">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+        <div class="grid grid-cols-1 sm:grid-cols-12 gap-6 items-center">
+          <div class="sm:col-span-5 bg-blush-100 rounded-2xl p-4">
+            ${getProductSVG(p.artType)}
+          </div>
+          <div class="sm:col-span-7 space-y-3">
+            <span class="px-3 py-1 rounded-full bg-blush-200 text-blush-700 text-[11px] font-bold">${p.badge} • ${p.volume}</span>
+            <h3 class="font-serif text-3xl font-semibold text-cocoa">${p.name}</h3>
+            <p class="text-xs font-semibold text-blush-500 uppercase tracking-wider">${p.tagline}</p>
+            <p class="text-sm text-cocoa-muted leading-relaxed">${p.description}</p>
+            <div class="pt-1">
+              <span class="text-xs font-bold text-cocoa block mb-1.5">Key Hero Ingredients:</span>
+              <div class="flex flex-wrap gap-1.5">
+                ${p.keyIngredients.map(ing => `<span class="px-2.5 py-1 rounded-full bg-white border border-blush-200 text-[11px] text-cocoa">${ing}</span>`).join('')}
+              </div>
+            </div>
+            <div class="pt-4 flex items-center justify-between gap-4 border-t border-blush-200">
+              <div class="text-xl font-bold text-cocoa">${formatRupiah(p.price)}</div>
+              <button onclick="addToCart('${p.id}'); closeModal();" class="px-6 py-3 rounded-full bg-blush-500 hover:bg-blush-600 text-white text-xs font-bold shadow-md">
+                + Tambah ke Keranjang
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+
+      backdrop.classList.remove('hidden');
+      backdrop.classList.add('flex');
+    }
+
+    function closeModal() {
+      const backdrop = document.getElementById('modal-backdrop');
+      backdrop.classList.add('hidden');
+      backdrop.classList.remove('flex');
+    }
+
+    // 4. INTERACTIVE 'FIND YOUR GLOW' SKIN QUIZ
+    const QUIZ_STEPS = [
+      {
+        question: 'Bagaimana kondisi kulit wajahmu saat siang hari?',
+        options: [
+          { label: 'Berminyak di T-Zone & mudah kusam', value: 'oily', icon: '✨' },
+          { label: 'Cenderung kering, ketarik, atau flaky', value: 'dry', icon: '💧' },
+          { label: 'Kombinasi & terkadang sensitif/kemerahan', value: 'sensitive', icon: '🌸' }
+        ]
+      },
+      {
+        question: 'Apa fokus utama kulit yang ingin kamu capai?',
+        options: [
+          { label: 'Mencerahkan kulit kusam & noda bekas jerawat', value: 'brighten', icon: '🌟' },
+          { label: 'Mengunci hidrasi & skin barrier yang kenyal', value: 'hydrate', icon: '🫧' },
+          { label: 'Proteksi harian praktis sebelum kuliah/kerja', value: 'protect', icon: '🛡️' }
+        ]
+      },
+      {
+        question: 'Pilih gaya rutinitas skincare favoritmu:',
+        options: [
+          { label: 'Simple & Cepat (2 langkah inti pagi hari)', value: 'duo', icon: '⚡' },
+          { label: 'Lengkap & Maksimal (4-Step Glow Ritual)', value: 'full', icon: '👑' },
+          { label: 'Fokus 1 Serum Andalan dulu', value: 'single', icon: '💖' }
+        ]
+      }
+    ];
+
+    let quizAnswers = [];
+
+    function renderQuiz(stepIndex = 0) {
+      const container = document.getElementById('quiz-container');
+      const stepLabel = document.getElementById('quiz-step-label');
+      const percentLabel = document.getElementById('quiz-percent');
+      const progressBar = document.getElementById('quiz-progress-bar');
+
+      if (stepIndex < QUIZ_STEPS.length) {
+        const current = QUIZ_STEPS[stepIndex];
+        const pct = Math.round(((stepIndex + 1) / QUIZ_STEPS.length) * 100);
+        stepLabel.textContent = `Langkah ${stepIndex + 1} dari ${QUIZ_STEPS.length}`;
+        percentLabel.textContent = `${pct}%`;
+        progressBar.style.width = `${pct}%`;
+
+        container.innerHTML = `
+          <h3 class="font-serif text-2xl sm:text-3xl font-semibold text-cocoa text-center mb-6">
+            ${current.question}
+          </h3>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            ${current.options.map(opt => `
+              <button onclick="answerQuiz('${opt.value}', ${stepIndex})" class="p-5 rounded-2xl bg-white hover:bg-blush-50 border border-blush-200 hover:border-blush-500 text-left transition-all shadow-xs hover:shadow-md group">
+                <div class="text-2xl mb-2">${opt.icon}</div>
+                <div class="text-sm font-semibold text-cocoa group-hover:text-blush-600 leading-snug">${opt.label}</div>
+              </button>
+            `).join('')}
+          </div>
+        `;
+      } else {
+        // Show Personalized Recommendation
+        stepLabel.textContent = 'Hasil Analisis Kulitmu Siap!';
+        percentLabel.textContent = '100%';
+        progressBar.style.width = '100%';
+
+        const vibe = quizAnswers[2];
+        let recommendedId = 'glow-boost-serum';
+        let reason = 'Glow Boost Serum (30 ml) memberikan dosis tepat Niacinamide & 4D Hyaluronic Acid untuk mencerahkan sekaligus menjaga keseimbangan kulitmu.';
+
+        if (vibe === 'full') {
+          recommendedId = 'complete-glow-ritual';
+          reason = 'Complete 4-Step Glow Ritual Bundle memberikan perawatan menyeluruh dari membersihkan, menutrisi, melembapkan, hingga melindungi kulitmu setiap hari.';
+        } else if (vibe === 'duo') {
+          recommendedId = 'duo-glow-starter';
+          reason = 'Daily Glow Duo (Glow Boost Serum + Invisible Silk Sunscreen) adalah pasangan pagi praktis tanpa rasa berat untuk kulit aktifmu.';
+        }
+
+        const recProduct = PRODUCTS.find(p => p.id === recommendedId);
+
+        container.innerHTML = `
+          <div class="bg-white rounded-3xl p-6 sm:p-8 border border-blush-200 flex flex-col sm:flex-row items-center gap-6">
+            <div class="w-36 shrink-0 bg-blush-100 rounded-2xl p-3">
+              ${getProductSVG(recProduct.artType)}
+            </div>
+            <div class="flex-1 text-center sm:text-left space-y-2">
+              <span class="px-3 py-1 rounded-full bg-blush-200 text-blush-700 text-[11px] font-bold">Your Personalized Match</span>
+              <h3 class="font-serif text-2xl sm:text-3xl font-semibold text-cocoa">${recProduct.name}</h3>
+              <p class="text-sm text-cocoa-muted leading-relaxed">${reason}</p>
+              <div class="pt-3 flex flex-wrap items-center justify-center sm:justify-start gap-3">
+                <button onclick="addToCart('${recProduct.id}')" class="px-6 py-3 rounded-full bg-blush-500 hover:bg-blush-600 text-white text-xs font-bold shadow-md transition-all">
+                  + Tambah ke Tas (${formatRupiah(recProduct.price)})
+                </button>
+                <button onclick="resetQuiz()" class="px-4 py-3 rounded-full text-xs font-semibold text-cocoa-muted hover:text-cocoa">
+                  Ulangi Quiz ↻
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    function answerQuiz(val, stepIndex) {
+      quizAnswers[stepIndex] = val;
+      renderQuiz(stepIndex + 1);
+    }
+
+    function resetQuiz() {
+      quizAnswers = [];
+      renderQuiz(0);
+    }
+
+    // 5. SHOPPING CART STATE & INTERACTIONS
+    let cart = [
+      { id: 'glow-boost-serum', qty: 1 } // Pre-loaded with flagship product for immediate interactive preview
+    ];
+    let promoApplied = false;
+
+    function toggleCart(open) {
+      const overlay = document.getElementById('cart-overlay');
+      const drawer = document.getElementById('cart-drawer');
+      if (open) {
+        overlay.classList.remove('hidden');
+        drawer.classList.remove('translate-x-full');
+      } else {
+        overlay.classList.add('hidden');
+        drawer.classList.add('translate-x-full');
+      }
+    }
+
+    function addToCart(productId) {
+      const existing = cart.find(item => item.id === productId);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({ id: productId, qty: 1 });
+      }
+      updateCartUI();
+      const prod = PRODUCTS.find(p => p.id === productId);
+      showToast(`✨ ${prod.name} ditambahkan ke Glow Bag!`);
+    }
+
+    function updateQty(productId, delta) {
+      const idx = cart.findIndex(item => item.id === productId);
+      if (idx === -1) return;
+      cart[idx].qty += delta;
+      if (cart[idx].qty <= 0) {
+        cart.splice(idx, 1);
+      }
+      updateCartUI();
+    }
+
+    function applyPromo() {
+      const input = document.getElementById('promo-input').value.trim().toUpperCase();
+      if (input === 'MYGLOW15') {
+        promoApplied = true;
+        updateCartUI();
+        showToast('🎉 Kode promo MYGLOW15 aktif! Diskon 15% diterapkan.');
+      } else {
+        showToast('⚠️ Kode promo tidak valid. Coba gunakan: MYGLOW15');
+      }
+    }
+
+    function copyPromoCode() {
+      const tempInput = document.createElement('input');
+      tempInput.value = 'MYGLOW15';
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempInput);
+      showToast('📋 Kode promo MYGLOW15 berhasil disalin!');
+    }
+
+    function updateCartUI() {
+      const badge = document.getElementById('cart-badge');
+      const drawerCount = document.getElementById('drawer-count');
+      const itemsContainer = document.getElementById('cart-items');
+      const subtotalEl = document.getElementById('cart-subtotal');
+      const discountRow = document.getElementById('discount-row');
+      const discountEl = document.getElementById('cart-discount');
+      const totalEl = document.getElementById('cart-total');
+      const shippingText = document.getElementById('shipping-text');
+      const shippingBar = document.getElementById('shipping-bar');
+
+      const totalQty = cart.reduce((acc, item) => acc + item.qty, 0);
+      badge.textContent = totalQty;
+      drawerCount.textContent = `${totalQty} item`;
+
+      if (cart.length === 0) {
+        itemsContainer.innerHTML = `
+          <div class="text-center py-16 space-y-3">
+            <div class="text-4xl">🌸</div>
+            <p class="font-serif text-2xl text-cocoa">Glow Bag-mu masih kosong</p>
+            <p class="text-xs text-cocoa-muted">Mulai perjalanan kulit sehatmu dengan Glow Boost Serum.</p>
+            <button onclick="toggleCart(false)" class="mt-2 px-6 py-2.5 rounded-full bg-blush-500 text-white text-xs font-semibold">
+              Jelajahi Produk
+            </button>
+          </div>
+        `;
+        subtotalEl.textContent = 'Rp 0';
+        totalEl.textContent = 'Rp 0';
+        discountRow.classList.add('hidden');
+        shippingBar.style.width = '0%';
+        shippingText.innerHTML = `Tambah <strong class="text-blush-600">Rp 250.000</strong> lagi untuk <strong>Gratis Ongkir</strong>!`;
+        return;
+      }
+
+      let subtotal = 0;
+      itemsContainer.innerHTML = cart.map(item => {
+        const prod = PRODUCTS.find(p => p.id === item.id);
+        subtotal += prod.price * item.qty;
+        return `
+          <div class="flex items-center gap-4 bg-white p-3.5 rounded-2xl border border-blush-200">
+            <div class="w-16 h-16 rounded-xl bg-blush-100 flex items-center justify-center shrink-0 overflow-hidden">
+              <div class="scale-[0.42] origin-center">${getProductSVG(prod.artType)}</div>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h4 class="text-sm font-bold text-cocoa truncate">${prod.name}</h4>
+              <p class="text-xs text-cocoa-muted">${prod.volume}</p>
+              <p class="text-xs font-bold text-blush-600 mt-1">${formatRupiah(prod.price)}</p>
+            </div>
+            <div class="flex items-center gap-2 bg-blush-50 rounded-full px-2 py-1 border border-blush-200">
+              <button onclick="updateQty('${prod.id}', -1)" class="w-6 h-6 rounded-full hover:bg-blush-200 text-cocoa font-bold text-xs flex items-center justify-center">-</button>
+              <span class="text-xs font-bold text-cocoa w-4 text-center">${item.qty}</span>
+              <button onclick="updateQty('${prod.id}', 1)" class="w-6 h-6 rounded-full hover:bg-blush-200 text-cocoa font-bold text-xs flex items-center justify-center">+</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      const freeShipThreshold = 250000;
+      const shipPct = Math.min(100, Math.round((subtotal / freeShipThreshold) * 100));
+      shippingBar.style.width = `${shipPct}%`;
+      if (subtotal >= freeShipThreshold) {
+        shippingText.innerHTML = `🎉 Selamat! Kamu mendapatkan <strong>Gratis Ongkir</strong> ke seluruh Indonesia!`;
+      } else {
+        const diff = freeShipThreshold - subtotal;
+        shippingText.innerHTML = `Tambah <strong class="text-blush-600">${formatRupiah(diff)}</strong> lagi untuk <strong>Gratis Ongkir</strong>!`;
+      }
+
+      const discount = promoApplied ? Math.round(subtotal * 0.15) : 0;
+      const total = subtotal - discount;
+
+      subtotalEl.textContent = formatRupiah(subtotal);
+      if (promoApplied) {
+        discountRow.classList.remove('hidden');
+        discountEl.textContent = `-${formatRupiah(discount)}`;
+      } else {
+        discountRow.classList.add('hidden');
+      }
+      totalEl.textContent = formatRupiah(total);
+    }
+
+    function checkoutNow() {
+      if (cart.length === 0) {
+        showToast('Keranjang belanjamu masih kosong!');
+        return;
+      }
+      toggleCart(false);
+      const backdrop = document.getElementById('modal-backdrop');
+      const box = document.getElementById('modal-box');
+      const orderNum = 'BLE-' + Math.floor(100000 + Math.random() * 900000);
+
+      box.innerHTML = `
+        <div class="text-center space-y-4 py-2">
+          <div class="w-16 h-16 rounded-full bg-blush-500 text-white mx-auto flex items-center justify-center text-2xl shadow-soft">
+            ✓
+          </div>
+          <span class="text-xs font-bold uppercase tracking-widest text-blush-500">Order Confirmed • #${orderNum}</span>
+          <h3 class="font-serif text-3xl font-semibold text-cocoa">Terima Kasih, Glow Bestie!</h3>
+          <p class="text-sm text-cocoa-muted leading-relaxed max-w-md mx-auto">
+            Pesanan <strong>BELLAÉ SKINCARE</strong> kamu sedang disiapkan dengan penuh cinta. Bersiaplah menyambut kulit sehat dan kilau alamu sendiri!
+          </p>
+          <div class="pt-3">
+            <button onclick="closeModal()" class="px-8 py-3.5 rounded-full bg-blush-500 hover:bg-blush-600 text-white text-xs font-bold uppercase tracking-wider shadow-md">
+              Kembali ke Beranda
+            </button>
+          </div>
+        </div>
+      `;
+
+      cart = [];
+      promoApplied = false;
+      updateCartUI();
+      backdrop.classList.remove('hidden');
+      backdrop.classList.add('flex');
+    }
+
+    // Toast Notification Helper
+    function showToast(message) {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = 'pointer-events-auto px-5 py-3.5 rounded-2xl bg-cocoa text-blush-50 text-xs sm:text-sm font-medium shadow-xl border border-blush-500/30 flex items-center gap-2.5 transform transition-all duration-300';
+      toast.innerHTML = `<span>${message}</span>`;
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(10px)';
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('hidden');
+    }
+
+    // Initialize Page
+    window.addEventListener('DOMContentLoaded', () => {
+      renderProducts('all');
+      renderQuiz(0);
+      updateCartUI();
+    });
+  </script>
+</body>
+</html>
